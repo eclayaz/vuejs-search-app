@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Result</p>
+    <p>Search Result</p>
     <div v-bind:key="result._id" v-for="result in results">
       <ul>
         <li v-bind:key="value._id" v-for="(value, propertyName) in result">

@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Search from './components/Search.vue';
 import Result from './components/Result.vue';
 
