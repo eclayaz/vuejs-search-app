@@ -1,6 +1,13 @@
 <template>
-  <div>
+  <form @submit="checkForm">
     <h1>Search App</h1>
+
+    <p v-if="errors.length">
+    <b>Please correct the following error(s):</b>
+    <ul>
+      <li v-bind:key="id" v-for="(error, id) in errors">{{ error }}</li>
+    </ul>
+  </p>
 
     Entity :
     <select v-model="entity">
@@ -20,8 +27,8 @@
       Search Term :
       <input v-model="searchTerm" placeholder="search..." />
     </div>
-    <button>Search</button>
-  </div>
+    <input type="submit" value="Search" />
+  </form>
 </template>
 
 <script>
@@ -32,6 +39,7 @@ export default {
       entity: '',
       searchTerm: '',
       searchKey: '',
+      errors: [],
       searchableFields: {
         organizations: [
           '_id',
@@ -89,6 +97,24 @@ export default {
   watch: {
     entity: function() {
       this.searchKey = '';
+    },
+  },
+  methods: {
+    checkForm: function(e) {
+      e.preventDefault();
+
+      if (this.entity && this.searchKey) {
+        this.$emit('search', this.searchKey);
+      }
+
+      this.errors = [];
+
+      if (!this.entity) {
+        this.errors.push('entity required.');
+      }
+      if (!this.searchKey) {
+        this.errors.push('searchKey required.');
+      }
     },
   },
 };

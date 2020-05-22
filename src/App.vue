@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Search />
+    <Search v-on:search="searchEntity" />
     <hr />
     <Result v-if="!results.lenth" v-bind:results="results" />
   </div>
@@ -65,6 +65,13 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    searchEntity(searchTerm) {
+      console.log('search: ');
+
+      console.log(searchTerm);
+    },
   },
 };
 </script>
