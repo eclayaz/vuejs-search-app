@@ -37,8 +37,8 @@ export default {
   data() {
     return {
       entity: '',
-      searchTerm: '',
       searchKey: '',
+      searchTerm: '',
       errors: [],
       searchableFields: {
         organizations: [
@@ -104,7 +104,7 @@ export default {
       e.preventDefault();
 
       if (this.entity && this.searchKey) {
-        this.$emit('search', this.searchKey);
+        this.$emit('search', this.entity, this.searchKey, this.searchTerm);
       }
 
       this.errors = [];
