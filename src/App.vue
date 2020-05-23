@@ -1,10 +1,12 @@
 <template>
   <div id="app" class="container">
-    <h1>Search App</h1>
-    <Errors v-bind:errors="errors" />
-    <Search v-on:search="searchEntity" />
-    <hr />
-    <Result v-bind:results="results" />
+    <ErrorBoundary>
+      <h1>Search App</h1>
+      <Errors v-bind:errors="errors" />
+      <Search v-on:search="searchEntity" />
+      <hr />
+      <Result v-bind:results="results" />
+    </ErrorBoundary>
   </div>
 </template>
 
