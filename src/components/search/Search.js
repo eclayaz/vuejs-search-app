@@ -6,7 +6,7 @@ export default {
       entity: '',
       searchKey: '',
       searchTerm: '',
-      errors: [],
+      errors: { entity: false, field: false },
       searchableFields: keyData,
     };
   },
@@ -23,13 +23,13 @@ export default {
         this.$emit('search', this.entity, this.searchKey, this.searchTerm);
       }
 
-      this.errors = [];
+      this.errors = { entity: false, field: false };
 
       if (!this.entity) {
-        this.errors.push('entity required.');
+        this.errors.entity = true;
       }
       if (!this.searchKey) {
-        this.errors.push('searchKey required.');
+        this.errors.field = true;
       }
     },
   },
