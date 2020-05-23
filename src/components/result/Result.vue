@@ -1,10 +1,14 @@
 <template>
-  <div>
-    <p>Search Result</p>
+  <div class="container">
+    <h4>Search Result</h4>
     <div v-bind:key="result._id" v-for="result in results">
-      <ul>
+      <ul class="card plain-list">
         <li v-bind:key="value._id" v-for="(value, propertyName) in result">
-          {{ propertyName }} : {{ value }}
+          <span class="font-weight-bold">
+            {{ propertyName }}
+          </span>
+          :
+          <span>{{ formatObjectValue(value) }}</span>
         </li>
       </ul>
     </div>

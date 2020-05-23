@@ -1,0 +1,8 @@
+ul.plain-list {
+  list-style: none;
+  padding: 20px;
+}
+
+ul li span {
+  text-transform: capitalize;
+}

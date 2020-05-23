@@ -3,7 +3,7 @@
     <h1>Search App</h1>
     <Search v-on:search="searchEntity" />
     <hr />
-    <Result v-if="!results.lenth" v-bind:results="results" />
+    <Result v-bind:results="results" />
   </div>
 </template>
 
