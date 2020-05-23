@@ -1,4 +1,4 @@
-import readFile from './ReadJsonFile.js';
+import readFile from '@/readJson/';
 
 export default async function searchEntity(entity, searchKey, searchTerm) {
   try {

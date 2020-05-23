@@ -1,6 +1,6 @@
 import searchEntity from '@/searchJson/SearchEntity.js';
-jest.mock('@/searchJson/ReadJsonFile.js');
-import readFile from '@/searchJson/ReadJsonFile.js';
+jest.mock('@/readJson/');
+import readFile from '@/readJson/';
 
 beforeEach(() => {
   jest.clearAllMocks();
