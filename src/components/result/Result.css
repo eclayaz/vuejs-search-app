@@ -3,6 +3,6 @@ ul.plain-list {
   padding: 20px;
 }
 
-ul li span {
+ul li span.upper-case {
   text-transform: capitalize;
 }

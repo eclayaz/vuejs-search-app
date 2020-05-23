@@ -13,6 +13,7 @@ export default {
   watch: {
     entity: function() {
       this.searchKey = '';
+      this.searchTerm = '';
     },
   },
   methods: {
