@@ -25,7 +25,8 @@ const searchInJson = async function(
       result = data.find((item) => {
         return isMatchingWithCriteria(item, searchCriteria);
       });
-      result = [result];
+
+      result = result === undefined ? [] : [result];
     }
 
     return Promise.resolve(cleanup(result, resultShouldOnlyContains));
@@ -38,7 +39,16 @@ const searchInJson = async function(
 const isMatchingWithCriteria = function(item, criteria) {
   let found = false;
   for (const index in criteria) {
-    if (item[criteria[index].searchKey] == criteria[index].searchTerm) {
+    let value = item[criteria[index].searchKey];
+    if (Array.isArray(value)) {
+      if (value.includes(criteria[index].searchTerm)) {
+        found = true;
+        break;
+      }
+      continue;
+    }
+
+    if (value + '' === criteria[index].searchTerm + '') {
       found = true;
       break;
     }
@@ -108,12 +118,15 @@ const fillUpAdditionalData = async function(entity, data) {
             ['subject']
           );
 
-          const organization = await searchInJson(
-            'organizations',
-            [{ searchKey: '_id', searchTerm: item.organization_id }],
-            false,
-            ['name']
-          );
+          let organization = [];
+          if (item.organization_id !== undefined) {
+            organization = await searchInJson(
+              'organizations',
+              [{ searchKey: '_id', searchTerm: item.organization_id }],
+              false,
+              ['name']
+            );
+          }
 
           return { ...item, tickets, organization };
         } catch (err) {
@@ -135,12 +148,15 @@ const fillUpAdditionalData = async function(entity, data) {
             ['name']
           );
 
-          const organization = await searchInJson(
-            'organizations',
-            [{ searchKey: '_id', searchTerm: item.organization_id }],
-            false,
-            ['name']
-          );
+          let organization = [];
+          if (item.organization_id !== undefined) {
+            organization = await searchInJson(
+              'organizations',
+              [{ searchKey: '_id', searchTerm: item.organization_id }],
+              false,
+              ['name']
+            );
+          }
 
           return { ...item, tickets, organization };
         } catch (err) {
