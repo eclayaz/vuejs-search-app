@@ -4,7 +4,7 @@
       <div class="col">
         <div class="mb-4">
           <label v-bind:class="{ 'text-danger': errors.entity }"
-            >Entity :</label
+            >Entity *</label
           >
           <select
             class="form-control"
@@ -21,7 +21,7 @@
           </small>
         </div>
         <div class="mb-4">
-          <label>Search Term :</label>
+          <label>Search Term</label>
           <input
             class="form-control"
             v-model="searchTerm"
@@ -31,7 +31,7 @@
       </div>
       <div class="col-8">
         <div v-if="entity !== '' && searchableFields.hasOwnProperty(entity)">
-          <label v-bind:class="{ 'text-danger': errors.field }">Field:</label>
+          <label v-bind:class="{ 'text-danger': errors.field }">Field *</label>
           <div
             class="custom-control custom-radio"
             v-bind:class="{ 'is-invalid': errors.field }"
