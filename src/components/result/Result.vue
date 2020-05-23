@@ -11,11 +11,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'resut',
-  props: ['results'],
-};
-</script>
+<script src="./Result.js"></script>
 
-<style></style>
+<style src="./Result.css" scoped></style>

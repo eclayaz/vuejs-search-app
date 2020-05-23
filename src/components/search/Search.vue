@@ -7,7 +7,8 @@
       <ul>
         <li v-bind:key="id" v-for="(error, id) in errors">{{ error }}</li>
       </ul>
-    </div>Entity :
+    </div>
+    Entity :
     <select v-model="entity">
       <option disabled value>Please select..</option>
       <option value="organizations">Organizations</option>
@@ -29,43 +30,6 @@
   </form>
 </template>
 
-<script>
-import { keyData } from "../searchJson/JsonKeyMap";
-export default {
-  name: "search",
-  data() {
-    return {
-      entity: "",
-      searchKey: "",
-      searchTerm: "",
-      errors: [],
-      searchableFields: keyData
-    };
-  },
-  watch: {
-    entity: function() {
-      this.searchKey = "";
-    }
-  },
-  methods: {
-    checkForm: function(e) {
-      e.preventDefault();
+<script src="./Search.js"></script>
 
-      if (this.entity && this.searchKey) {
-        this.$emit("search", this.entity, this.searchKey, this.searchTerm);
-      }
-
-      this.errors = [];
-
-      if (!this.entity) {
-        this.errors.push("entity required.");
-      }
-      if (!this.searchKey) {
-        this.errors.push("searchKey required.");
-      }
-    }
-  }
-};
-</script>
-
-<style></style>
+<style src="./Search.css" scoped></style>
