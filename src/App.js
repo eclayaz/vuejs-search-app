@@ -30,5 +30,8 @@ export default {
         this.errors = err.message;
       }
     },
+    clearResults() {
+      this.results = '';
+    },
   },
 };

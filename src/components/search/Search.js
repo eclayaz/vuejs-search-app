@@ -32,6 +32,8 @@ export default {
       if (!this.searchKey) {
         this.errors.field = true;
       }
+
+      this.$emit('formError');
     },
   },
 };

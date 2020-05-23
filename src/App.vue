@@ -3,7 +3,7 @@
     <ErrorBoundary>
       <h1>Search App</h1>
       <Errors v-bind:errors="errors" />
-      <Search v-on:search="searchEntity" />
+      <Search v-on:search="searchEntity" v-on:formError="clearResults" />
       <hr />
       <Result v-bind:results="results" />
     </ErrorBoundary>

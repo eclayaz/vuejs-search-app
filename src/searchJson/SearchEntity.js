@@ -36,14 +36,14 @@ const fillOrganizationAdditionalData = async function(data) {
     data.map(async (item) => {
       try {
         const tickets = await searchInJson(
-          'tickets',
+          ENTITY.Tickets,
           [{ searchKey: 'organization_id', searchTerm: item._id }],
           true,
           ['subject']
         );
 
         const users = await searchInJson(
-          'users',
+          ENTITY.Users,
           [{ searchKey: 'organization_id', searchTerm: item._id }],
           true,
           ['name']
@@ -62,7 +62,7 @@ const fillUserAdditionalData = async function(data) {
     data.map(async (item) => {
       try {
         const tickets = await searchInJson(
-          'tickets',
+          ENTITY.Tickets,
           [
             { searchKey: 'submitter_id', searchTerm: item._id },
             { searchKey: 'assignee_id', searchTerm: item._id },
@@ -74,7 +74,7 @@ const fillUserAdditionalData = async function(data) {
         let organization = [];
         if (item.organization_id !== undefined) {
           organization = await searchInJson(
-            'organizations',
+            ENTITY.Organizations,
             [{ searchKey: '_id', searchTerm: item.organization_id }],
             false,
             ['name']
@@ -94,7 +94,7 @@ const fillTicketAdditionalData = async function(data) {
     data.map(async (item) => {
       try {
         const tickets = await searchInJson(
-          'users',
+          ENTITY.Users,
           [
             { searchKey: '_id', searchTerm: item.submitter_id },
             { searchKey: '_id', searchTerm: item.assignee_id },
@@ -106,7 +106,7 @@ const fillTicketAdditionalData = async function(data) {
         let organization = [];
         if (item.organization_id !== undefined) {
           organization = await searchInJson(
-            'organizations',
+            ENTITY.Organizations,
             [{ searchKey: '_id', searchTerm: item.organization_id }],
             false,
             ['name']
