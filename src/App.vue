@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
+    <h1>Search App</h1>
     <Search v-on:search="searchEntity" />
     <hr />
     <Result v-if="!results.lenth" v-bind:results="results" />
