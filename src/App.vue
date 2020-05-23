@@ -26,7 +26,12 @@ export default {
   },
   methods: {
     async searchEntity(entity, searchKey, searchTerm) {
-      this.results = await searchEntity(entity, searchKey, searchTerm);
+      try {
+        this.results = await searchEntity(entity, searchKey, searchTerm);
+      } catch (err) {
+        this.results = "";
+        console.log(err);
+      }
     }
   }
 };

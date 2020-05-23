@@ -1,20 +1,18 @@
 export default async function searchEntity(entity, searchKey, searchTerm) {
-  const resultShouldOnlyContains = ['_id', 'domain_names', 'name'];
-  const data = await searchInJson(
-    entity,
-    [{ searchKey, searchTerm }],
-    true,
-    resultShouldOnlyContains
-  );
-
-  return Promise.resolve(data);
+  try {
+    let data = await searchInJson(entity, [{ searchKey, searchTerm }], true);
+    data = await fillUpAdditionalData(entity, data);
+    return Promise.resolve(data);
+  } catch (err) {
+    return Promise.reject(err);
+  }
 }
 
 const searchInJson = async function(
   entity,
   searchCriteria,
   multiple,
-  resultShouldOnlyContains
+  resultShouldOnlyContains = []
 ) {
   try {
     const data = await readFile(entity);
@@ -69,4 +67,88 @@ const cleanup = function(items, shouldOnlyContains = []) {
     });
     return formattedItem;
   });
+};
+
+const fillUpAdditionalData = async function(entity, data) {
+  if (entity === 'organizations') {
+    return Promise.all(
+      data.map(async (item) => {
+        try {
+          const tickets = await searchInJson(
+            'tickets',
+            [{ searchKey: 'organization_id', searchTerm: item._id }],
+            true,
+            ['subject']
+          );
+
+          const users = await searchInJson(
+            'users',
+            [{ searchKey: 'organization_id', searchTerm: item._id }],
+            true,
+            ['name']
+          );
+
+          return { ...item, tickets, users };
+        } catch (err) {
+          return Promise.reject(err);
+        }
+      })
+    );
+  } else if (entity === 'users') {
+    return Promise.all(
+      data.map(async (item) => {
+        try {
+          const tickets = await searchInJson(
+            'tickets',
+            [
+              { searchKey: 'submitter_id', searchTerm: item._id },
+              { searchKey: 'assignee_id', searchTerm: item._id },
+            ],
+            true,
+            ['subject']
+          );
+
+          const organization = await searchInJson(
+            'organizations',
+            [{ searchKey: '_id', searchTerm: item.organization_id }],
+            false,
+            ['name']
+          );
+
+          return { ...item, tickets, organization };
+        } catch (err) {
+          return Promise.reject(err);
+        }
+      })
+    );
+  } else if (entity === 'tickets') {
+    return Promise.all(
+      data.map(async (item) => {
+        try {
+          const tickets = await searchInJson(
+            'users',
+            [
+              { searchKey: '_id', searchTerm: item.submitter_id },
+              { searchKey: '_id', searchTerm: item.assignee_id },
+            ],
+            true,
+            ['name']
+          );
+
+          const organization = await searchInJson(
+            'organizations',
+            [{ searchKey: '_id', searchTerm: item.organization_id }],
+            false,
+            ['name']
+          );
+
+          return { ...item, tickets, organization };
+        } catch (err) {
+          return Promise.reject(err);
+        }
+      })
+    );
+  } else {
+    return Promise.resolve(data);
+  }
 };
