@@ -1,5 +1,5 @@
 export default {
-  name: 'resut',
+  name: 'result',
   props: ['results'],
   methods: {
     formatObjectValue(value) {
