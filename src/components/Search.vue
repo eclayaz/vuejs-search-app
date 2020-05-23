@@ -2,16 +2,14 @@
   <form @submit="checkForm">
     <h1>Search App</h1>
 
-    <p v-if="errors.length">
-    <b>Please correct the following error(s):</b>
-    <ul>
-      <li v-bind:key="id" v-for="(error, id) in errors">{{ error }}</li>
-    </ul>
-  </p>
-
-    Entity :
+    <div v-if="errors.length">
+      <b>Please correct the following error(s):</b>
+      <ul>
+        <li v-bind:key="id" v-for="(error, id) in errors">{{ error }}</li>
+      </ul>
+    </div>Entity :
     <select v-model="entity">
-      <option disabled value="">Please select..</option>
+      <option disabled value>Please select..</option>
       <option value="organizations">Organizations</option>
       <option value="users">Users</option>
       <option value="tickets">Tickets</option>
@@ -32,91 +30,41 @@
 </template>
 
 <script>
+import { keyData } from "../searchJson/JsonKeyMap";
 export default {
-  name: 'search',
+  name: "search",
   data() {
     return {
-      entity: '',
-      searchKey: '',
-      searchTerm: '',
+      entity: "",
+      searchKey: "",
+      searchTerm: "",
       errors: [],
-      searchableFields: {
-        organizations: [
-          '_id',
-          'url',
-          'external_id',
-          'name',
-          'domain_names',
-          'created_at',
-          'details',
-          'shared_tickets',
-          'tags',
-        ],
-        users: [
-          '_id',
-          'url',
-          'external_id',
-          'name',
-          'alias',
-          'created_at',
-          'active',
-          'verified',
-          'shared',
-          'locale',
-          'timezone',
-          'last_login_at',
-          'email',
-          'phone',
-          'signature',
-          'organization_id',
-          'tags',
-          'suspended',
-          'role',
-        ],
-        tickets: [
-          '_id',
-          'url',
-          'external_id',
-          'created_at',
-          'type',
-          'subject',
-          'description',
-          'priority',
-          'status',
-          'submitter_id',
-          'assignee_id',
-          'organization_id',
-          'tags',
-          'has_incidents',
-          'due_at',
-          'via',
-        ],
-      },
+      searchableFields: keyData
     };
   },
   watch: {
     entity: function() {
-      this.searchKey = '';
-    },
+      this.searchKey = "";
+    }
   },
   methods: {
     checkForm: function(e) {
       e.preventDefault();
 
       if (this.entity && this.searchKey) {
-        this.$emit('search', this.entity, this.searchKey, this.searchTerm);
+        this.$emit("search", this.entity, this.searchKey, this.searchTerm);
       }
 
       this.errors = [];
 
       if (!this.entity) {
-        this.errors.push('entity required.');
+        this.errors.push("entity required.");
       }
       if (!this.searchKey) {
-        this.errors.push('searchKey required.');
+        this.errors.push("searchKey required.");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
