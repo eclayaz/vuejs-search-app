@@ -1,3 +1,5 @@
+import readFile from './ReadJsonFile.js';
+
 export default async function searchEntity(entity, searchKey, searchTerm) {
   try {
     let data = await searchInJson(entity, [{ searchKey, searchTerm }], true);
@@ -54,15 +56,6 @@ const isMatchingWithCriteria = function(item, criteria) {
     }
   }
   return found;
-};
-
-const readFile = async function(entity) {
-  try {
-    const { default: json } = await import(`../assets/${entity}.json`);
-    return Promise.resolve(json);
-  } catch (err) {
-    return Promise.reject(err);
-  }
 };
 
 const cleanup = function(items, shouldOnlyContains = []) {

@@ -7,21 +7,21 @@
 </template>
 
 <script>
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import Search from "./components/Search.vue";
-import Result from "./components/Result.vue";
-import searchEntity from "./searchJson/SearchEntity.js";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import Search from './components/Search.vue';
+import Result from './components/Result.vue';
+import searchEntity from './searchJson/SearchEntity.js';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Search,
-    Result
+    Result,
   },
   data() {
     return {
-      results: []
+      results: [],
     };
   },
   methods: {
@@ -29,11 +29,11 @@ export default {
       try {
         this.results = await searchEntity(entity, searchKey, searchTerm);
       } catch (err) {
-        this.results = "";
+        this.results = '';
         console.log(err);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
